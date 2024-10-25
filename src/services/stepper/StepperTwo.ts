@@ -1,21 +1,21 @@
-import { StepOne, StepThree, StepTwo } from '../../steppers';
+import { StepOne, StepThree, StepTwo } from '../../Solutions/steppers';
+import {
+  StepperTwoStepOne,
+  StepperTwoStepTwo,
+} from '../../components/steppers/StepperTwo';
 
-import { IStepperProvider } from '../../Stepper';
-import { IStepMap } from '../../Stepper/types';
+import { IStepperProvider } from '../../components/Stepper';
+import { IStepMap } from '../../components/Stepper/types';
 
-class StepperOne {
+class StepperTwo {
   private stepMap: IStepMap = {
     stepOne: {
       value: null,
-      renderView: StepOne,
+      renderView: StepperTwoStepOne,
     },
     stepTwo: {
       value: null,
-      renderView: StepTwo,
-    },
-    stepThree: {
-      value: null,
-      renderView: StepThree,
+      renderView: StepperTwoStepTwo,
     },
   };
 
@@ -38,4 +38,4 @@ class StepperOne {
   };
 }
 
-export { StepperOne };
+export { StepperTwo };

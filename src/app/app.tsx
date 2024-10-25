@@ -1,11 +1,26 @@
-import { Solutions } from '../Solutions/Solutions';
+import { StepperFactory } from '../services';
+import { StepperContainer } from '../components/StepperContainer';
+import { STEPPER } from '../types';
 
 function App() {
   return (
     <div>
+      {/* Render the first stepper instance */}
       <div>
-        <Solutions />
+        <StepperContainer
+          config={StepperFactory.createVehicle(STEPPER.STEPPER_ONE).initConfig}
+        />
       </div>
+
+      {/* Separator for visual distinction between steppers */}
+      <br />
+      <hr />
+      <br />
+
+      {/* Render the second stepper instance */}
+      <StepperContainer
+        config={StepperFactory.createVehicle(STEPPER.STEPPER_TWO).initConfig}
+      />
     </div>
   );
 }
