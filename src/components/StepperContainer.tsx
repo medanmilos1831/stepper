@@ -9,6 +9,7 @@ const StepperContainer = ({ config }: { config: IInitConfig }) => {
       //   {...StepperFactory.createStepper(STEPPER.STEPPER_ONE).initConfig}
       {...config}
       onFinish={(values) => {
+        alert('POGLEDATI LOG!!!');
         console.log('values', values);
       }}
     >
