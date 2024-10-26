@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface IStepperContext {
+export interface IStepperContext extends Omit<IStepperProvider, 'initStep'> {
   activeView: string;
   setActiveView(): void;
   status: {
@@ -9,27 +9,16 @@ export interface IStepperContext {
     nextStep: string | null;
     prevStep: string | null;
   };
-  onSubmit: (obj: {
-    value: any;
-    activeView: string;
-    nextStep: boolean;
-  }) => void;
   Component: () => ReactNode;
 }
 
-export interface IStepperProvider
-  extends Omit<
-    IStepperContext,
-    'Component' | 'status' | 'setActiveView' | 'activeView'
-  > {
-  initStep: string;
+export interface IStepperProvider extends IInitConfig {
+  onFinish: (values: any) => void;
+}
+
+export interface IInitConfig {
+  initStep?: string;
   stepMap: IStepMap;
-  onFinish: () => void;
-  onSubmit: (obj: {
-    value: any;
-    activeView: string;
-    nextStep: boolean;
-  }) => void;
 }
 
 export type StepperProvider = Omit<IStepperContext, 'Component'>;

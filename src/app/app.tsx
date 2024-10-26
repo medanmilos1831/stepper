@@ -8,7 +8,7 @@ function App() {
       {/* Render the first stepper instance */}
       <div>
         <StepperContainer
-          config={StepperFactory.createVehicle(STEPPER.STEPPER_ONE).initConfig}
+          config={StepperFactory.createStepper(STEPPER.STEPPER_ONE).initConfig}
         />
       </div>
 
@@ -19,7 +19,7 @@ function App() {
 
       {/* Render the second stepper instance */}
       <StepperContainer
-        config={StepperFactory.createVehicle(STEPPER.STEPPER_TWO).initConfig}
+        config={StepperFactory.createStepper(STEPPER.STEPPER_TWO).initConfig}
       />
     </div>
   );

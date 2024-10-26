@@ -1,2 +1,6 @@
 export * from './StepperProvider';
-export { type IStepMap, type IStepperProvider } from './types';
+export {
+  type IStepMap,
+  type IStepperProvider,
+  type IInitConfig,
+} from './types';

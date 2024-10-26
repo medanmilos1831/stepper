@@ -17,34 +17,37 @@ const StepperProvider = ({
   children,
   initStep,
   stepMap,
-  onSubmit,
+  onFinish = () => {},
 }: PropsWithChildren<IStepperProvider>) => {
-  const [activeView, setActiveView] = useState<string>(initStep);
+  const [activeView, setActiveView] = useState<string>(
+    initStep ? initStep : Object.keys(stepMap)[0]
+  );
   const steps = Object.keys(stepMap);
   const totalSteps = steps.length;
   const currentPosition = steps.findIndex((step) => step === activeView);
+  const status = {
+    currentPosition,
+    totalSteps,
+    nextStep:
+      currentPosition === steps.length ? null : steps[currentPosition + 1],
+    prevStep: currentPosition === 0 ? null : steps[currentPosition - 1],
+  };
+  const setActiveViewHandler = () => {
+    if (status.nextStep) {
+      setActiveView(status.nextStep);
+      return;
+    }
+    setActiveView(steps[0]);
+  };
   return (
     <StepperContext.Provider
       value={{
         activeView,
-        setActiveView() {
-          if (this.status.nextStep) {
-            setActiveView(this.status.nextStep);
-            return;
-          }
-          setActiveView(steps[0]);
-        },
-        status: {
-          currentPosition,
-          totalSteps,
-          nextStep:
-            currentPosition === steps.length
-              ? null
-              : steps[currentPosition + 1],
-          prevStep: currentPosition === 0 ? null : steps[currentPosition - 1],
-        },
-        onSubmit,
+        setActiveView: setActiveViewHandler,
+        status,
         Component: stepMap[activeView].renderView,
+        stepMap,
+        onFinish,
       }}
     >
       {children}
@@ -79,20 +82,22 @@ StepperProvider.ViewContainer = ({
 StepperProvider.FormContainer = ({
   children,
   initialValues,
-}: PropsWithChildren<{ initialValues: any }>) => {
+}: PropsWithChildren<{
+  initialValues: any;
+}>) => {
   const context = useContext(StepperContext)!;
+  const onSubmit = (value: any) => {
+    context.stepMap[context.activeView].value = value;
+    if (!context.status.nextStep) {
+      let values = Object.keys(context.stepMap).map(
+        (key) => context.stepMap[key].value
+      );
+      context.onFinish!(values);
+    }
+    context.setActiveView();
+  };
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(value) => {
-        context.onSubmit({
-          value,
-          activeView: context.activeView,
-          nextStep: !!context.status.nextStep,
-        });
-        context.setActiveView();
-      }}
-    >
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
       <Form>
         {children}
         <button type="submit">

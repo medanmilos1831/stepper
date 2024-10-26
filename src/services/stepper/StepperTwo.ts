@@ -1,4 +1,3 @@
-import { StepOne, StepThree, StepTwo } from '../../Solutions/steppers';
 import {
   StepperTwoStepOne,
   StepperTwoStepTwo,
@@ -22,19 +21,6 @@ class StepperTwo {
   initConfig: IStepperProvider = {
     initStep: 'stepOne',
     stepMap: this.stepMap,
-    onFinish: () => {
-      const values = Object.keys(this.stepMap).map(
-        (key) => this.stepMap[key].value
-      );
-      alert(`Pogledati log!`);
-      console.log('onFinish', values);
-    },
-    onSubmit: ({ value, activeView, nextStep }) => {
-      this.stepMap[activeView].value = value;
-      if (!nextStep) {
-        this.initConfig.onFinish();
-      }
-    },
   };
 }
 

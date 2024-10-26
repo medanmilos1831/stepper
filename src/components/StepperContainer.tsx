@@ -1,13 +1,16 @@
 import { StepperProvider } from './Stepper/StepperProvider';
-import { IStepperProvider } from './Stepper/types';
+import { IInitConfig } from './Stepper/types';
 
-const StepperContainer = ({ config }: { config: IStepperProvider }) => {
+const StepperContainer = ({ config }: { config: IInitConfig }) => {
   return (
     <StepperProvider
       // Initialize the stepper with configuration from the factory.
       // This stepper will be configured based on 'STEPPER_ONE'.
-      //   {...StepperFactory.createVehicle(STEPPER.STEPPER_ONE).initConfig}
+      //   {...StepperFactory.createStepper(STEPPER.STEPPER_ONE).initConfig}
       {...config}
+      onFinish={(values) => {
+        console.log('values', values);
+      }}
     >
       <StepperProvider.ViewContainer>
         {({ Component }) => {

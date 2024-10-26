@@ -1,5 +1,5 @@
 import { StepOne, StepTwo, StepThree } from '../../components/steppers';
-import { IStepperProvider } from '../../components/Stepper';
+import { IInitConfig } from '../../components/Stepper';
 import { IStepMap } from '../../components/Stepper/types';
 
 class StepperOne {
@@ -17,23 +17,9 @@ class StepperOne {
       renderView: StepThree,
     },
   };
-
-  initConfig: IStepperProvider = {
+  initConfig: IInitConfig = {
     initStep: 'stepOne',
     stepMap: this.stepMap,
-    onFinish: () => {
-      const values = Object.keys(this.stepMap).map(
-        (key) => this.stepMap[key].value
-      );
-      alert(`Pogledati log!`);
-      console.log('onFinish', values);
-    },
-    onSubmit: ({ value, activeView, nextStep }) => {
-      this.stepMap[activeView].value = value;
-      if (!nextStep) {
-        this.initConfig.onFinish();
-      }
-    },
   };
 }
 
